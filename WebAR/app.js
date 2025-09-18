@@ -4,13 +4,9 @@ const ctx = canvas.getContext('2d');
 const tryOnButton = document.getElementById('tryOnButton');
 
 let uploadedImage = new Image();
-<<<<<<< HEAD
 let dressImage = new Image(); // dress overlay image
 dressImage.src = 'image.png'; // your dress image path
-=======
-let dressImage = new Image();
-dressImage.src = 'dress.png'; // Make sure dress.png is in your project folder
->>>>>>> 7c3c56977e334a30fc11e0e11892a71b33f1a172
+
 
 dressImage.onload = () => {
     console.log('Dress image loaded');
