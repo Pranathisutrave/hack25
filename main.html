@@ -4,248 +4,249 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Bharat Heritage</title>
-  
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f5f5f5;
+      height: 100%;
+      font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+      /* Enable smooth scrolling */
+      scroll-behavior: smooth;
     }
+    body {
+      min-height: 100vh;
+      /* Space for the absolutely positioned background layer */
+    }
+    /* Full fixed background image + shadow overlay */
+    .fixed-bg {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 0;
+      background: url('main.png.jpg') no-repeat center center/cover;
+      pointer-events: none; /* Make background 'untouchable' */
+    }
+    .fixed-bg::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      /* Overlay: subtle dark gradient and shadow falloff bottom */
+      background: 
+        linear-gradient(to bottom,rgba(0,0,0, 0.30),rgba(0,0,0, 0.45) 65%,rgba(0,0,0,0.57)),
+        radial-gradient(farthest-side at 50% 100%,rgba(0,0,0,0.30) 90%,transparent 100%);
+      /* Soft outer shadow border for lift effect */
+      box-shadow: 0 10px 45px 6px transparent inset;
+      pointer-events: none;
+      border-radius: 0;
+    }
+
+
+
+    /* Main app content wrapper is above the background */
+    .main-content {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      padding-top: 60px;
+    }
+
+
+
     .main {
-      /*background-image: url("https://th.bing.com/th/id/OIP.Gbcu05T2tg69gW3CFwwDTAHaEK?w=317&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7");*/
-      background-repeat: no-repeat;
-      background-color:rgb(244, 172, 46);
-      background-size: cover;
-      height: 100vh;
-      color: white;
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 48px 6vw 20px 6vw;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      text-align:center;
-      padding: 20px;
+      background: rgba(255,255,255,0.90);
+      border-radius: 20px;
+      box-shadow: 0 4px 19px transparent;
+      margin-bottom: 36px;
+      /* Glass look for extra depth */
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
     }
     h1 {
       font-size: 3rem;
       margin-bottom: 20px;
+      line-height: 1.1;
+      font-weight: 900;
     }
     .bharat {
       background: linear-gradient(90deg, orange, white, green);
       background-clip: text;
+      -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: bold;
+      margin-right: 6px;
     }
     .heritage {
-      background: linear-gradient(90deg, orange, white, blue, green);
-      background-clip: text;
+      background: linear-gradient(90deg, #e15e24 10%,#fff 55%,#122963 70%,#13b859 98%);
+      background-clip: text; -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-weight: bold;
     }
-    p {
-      font-size: medium;
-      margin-bottom: 30px;
-      line-height: 1.5;
+    .main p {
+      font-size: 1.18rem;
+      margin-bottom: 36px;
+      line-height: 1.54;
+      color: #3d2e61;
+      text-shadow: 0 2px 16px rgba(235,235,235,0.4);
     }
     .buttons {
-      margin-bottom: 40px;
+      margin-bottom: 34px;
+      display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
     }
-    @media (max-width: 900px) {
-      .main {
-        min-height: 670px;
-        height: 110vh;
-      }
+    /* Common button style (from culture button) */
+    .culture-btn {
+      margin-top: 1.2em; 
+      padding: 0.65em 2em; 
+      border-radius: 9px;
+      border: none; 
+      background-color: #e67e22; 
+      color: #fff; 
+      font-weight: 700;
+      cursor: pointer; 
+      font-size: 1em; 
+      transition: background 0.2s, transform 0.19s;
+      box-shadow: 0 2px 10px transparent;
+    }
+    .culture-btn:hover, .culture-btn:focus-visible {
+      background-color: #ffd350; 
+      color: #613c2e; 
+      outline: none; 
+      transform: scale(1.07);
+    }
+    /* Override previous login and signup button styles */
+    .login-btn, .signup-btn {
+      all: unset;
+      display: inline-block;
     }
     .login-btn, .signup-btn {
-      padding: 12px 30px;
-      border: none;
-      border-radius: 8px;
-      margin: 10px;
-      font-size: 1rem;
+      font-size: 1.05rem;
+      font-weight: bold;
       cursor: pointer;
+      text-align: center;
+      padding: 12px 30px;
     }
-    .login-btn {
-      background: #e57023;
-      color: white;
-      border: 1px solid white;
-    }
-    .signup-btn {
-      background: rgba(191, 72, 72, 0.3);
-      color: white;
-      border: 1px solid white;
-    }
-    .login-btn:hover {
-      background: #ff7f00;
-    }
-    .signup-btn:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
+    /* States cards */
     .states {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: 22px;
       justify-content: center;
+      margin-bottom: 30px;
     }
     .card {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 20px 30px;
-      border-radius: 12px;
+      background: rgba(255,255,255,0.15);
+      padding: 24px 36px;
+      border-radius: 16px;
       width: 150px;
       text-align: center;
-      backdrop-filter: blur(5px);
-      transition: transform 0.3s ease;
+      backdrop-filter: blur(4px);
+      transition: transform 0.3s, box-shadow 0.25s;
+      color: #3d2e61;
+      font-weight: 600;
+      font-size: 1.1rem;
     }
-    .card:hover {
-      transform: scale(1.05);
-    }
+    .card:hover { transform: scale(1.05); box-shadow:0 8px 24px transparent;}
     .card h2 {
-      font-size: 1.5rem;
-      margin: 10px 0;
+      font-size: 2rem;
+      margin: 8px 0 6px;
+      font-weight: 900;
     }
-    .card p {
-      font-size: 0.9rem;
-    }
+    .card p {margin:0}
+
+
+
+    /* Feature Section */
     .section-features {
-      background: #fff;
-      padding: 40px 8vw 60px 8vw;
-      max-width: 950px;
-      margin: 0 auto;
-      border-radius: 16px;
-      box-shadow: 0 2px 18px #0001;
-      /*background-image: url('https://th.bing.com/th/id/OIP.FuHUl53eLjHNHT5UsN1ksgHaEY?w=282&h=180&c=7&r=0&o=5&dpr=1.5&pid=1.7'); */
-      background-size:cover; 
-      background-color: rgb(254, 254, 253);
-      background-position: center; 
-      color: white;
+      background: rgba(248,248,248,0.96);
+      box-shadow: 0 12px 38px 0 transparent;
+      padding: 46px 7vw 68px 7vw;
+      max-width: 1050px;
+      margin: 0 auto 36px auto;
+      border-radius: 18px;
+      position: relative;
+      z-index: 12;
     }
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 42px 34px;
     }
     .feature-box {
-      background: #39383704;
+      background: rgba(255,255,255,0.89);
       border-radius: 15px;
-      box-shadow: 0 2px 8px #0002;
-      padding: 22px;
+      box-shadow: 0 2px 8px transparent;
+      padding: 28px 22px;
       text-align: center;
-    }
-    .feature-box .icon {
-      font-size: 2.1em;
-      display: block;
-      margin-bottom: 10px;
-      color: #f97d43;
-    }
-    .feature-box h3 {
-      font-size: 1.24em;
-      margin-bottom: 8px;
+      transition: box-shadow 0.22s, transform .19s;
       color: #453a67;
-      font-weight: 700;
     }
-    .feature-box p {
-      font-size: 1em;
-      color: #595d7a;
+    .feature-box:hover, .feature-box:focus-visible { 
+      box-shadow:0 7px 23px transparent; background: #fffbe8;
+      outline: none; transform: scale(1.03);
     }
-    .cta-center {
-      text-align: center;
-      margin-top: 22px;
+    .feature-box .icon { font-size: 2.2em; margin-bottom: 12px; }
+    .feature-box h3 { font-size: 1.23em; margin-bottom: 10px; font-weight: 700; color: #b27e19;}
+    .feature-box p { font-size: 1em; color: #595d7a; }
+    /* Remove feature-box button overrides to use culture-btn style */
+    .feature-box .button a > button {
+      all: unset;
+      display: inline-block;
     }
-    .start-btn {
-      background: #ffd350;
-      color: #3d2e61;
-      border: none;
-      border-radius: 8px;
-      padding: 15px 36px;
-      font-size: 1.15em;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 2px 10px #ffd35044;
-      margin-top: 14px;
-    }
-    .culture-btn{
-      padding: 12px 28px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      border-radius: 12px;
-      border: none;
-      background-color: #e67e22;
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 2px 10px #e67e2244;
-      transition: background-color 0.3s ease;
-      margin-bottom: 8px;
-    }
-    .web-btn{
-      padding: 12px 28px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      border-radius: 12px;
-      border: none;
-      background-color: #e67e22;
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 2px 10px #e67e2244;
-      transition: background-color 0.3s ease;
-      margin-bottom: 8px;
-    }
-    .quiz-btn{
-      padding: 12px 28px;
-      font-size: 1.05rem;
-      font-weight: 700;
-      border-radius: 12px;
-      border: none;
-      background-color: #e67e22;
-      color: white;
-      cursor: pointer;
-      box-shadow: 0 2px 10px #e67e2244;
-      transition: background-color 0.3s ease;
-      margin-bottom: 8px;
-    }
-    
+
+
+    /* Footer */
     .footer {
-      background-color: #fff;
-      padding: 40px 20px;
-      text-align: center;
+      background: linear-gradient(100deg, #fff 60%, #f9e1b3 100%);
+      padding: 38px 20px; text-align: center; color: #a83232;
+      font-size: 1.1rem; border-radius: 0 0 14px 14px;
+      box-shadow: 0 -2px 16px transparent;
     }
-    .feedback h2 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-      color: #333;
-    }
+    .feedback h2 { font-size: 1.5rem; margin-bottom: 20px; color: #333; font-weight: 700; }
     .feedback input[type="text"] {
-      padding: 12px;
-      width: 60%;
-      max-width: 400px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 1rem;
+      padding: 12px; width: 60%; max-width: 400px; border-radius: 8px; border: 1px solid #dddccd;
+      font-size: 1.03rem; margin-bottom: 11px;
     }
-    @media (max-width: 768px) {
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-      .main .content {
-        flex-direction: column;
-        align-items: center;
-      }
+    .feedback .submit-btn {
+      padding: 12px 28px; font-size: 1.05rem; font-weight: 700;
+      border-radius: 9px; border: none; background-color: #e67e22; color: white; cursor: pointer;
+      box-shadow: 0 2px 10px transparent; margin-left:8px; transition: background-color 0.3s ease;
+    }
+    .feedback .submit-btn:hover { background-color: #ffd350; color: #a83232; }
+    @media (max-width: 900px) {
+      .main, .section-features { padding: 20px 6vw 20px 6vw;}
+      h1 { font-size: 2rem;}
+    }
+    @media (max-width: 700px) {
+      .main, .section-features { padding: 12px 2vw;}
+      .states { gap: 10px;}
+      .features-grid { gap: 18px;}
+    }
+    @media (max-width: 600px) {
+      .card { width: 100px; padding: 14px;}
+      .main-content { padding-top: 10px;}
     }
   </style>
 </head>
 <body>
-  <div class="main">
-    <div class="content">
+  <div class="fixed-bg"></div>
+  <div class="main-content">
+    <div class="main">
       <div class="intro">
         <h1><span class="bharat">Bharat</span> <span class="heritage">Heritage</span></h1>
         <p>Discover India's rich cultural tapestry through immersive technology.<br>
           Experience traditional art forms, heritage sites, and authentic crafts like never before.</p>
         <div class="buttons">
-          <a href="login.html"><button class="login-btn">Login</button></a>
-          <a href="signup.html"><button class="signup-btn">Signup</button></a>
+          <a href="login.html"><button class="culture-btn">Login</button></a>
+          <a href="signup.html"><button class="culture-btn">Signup</button></a>
         </div>
       </div>
       <div class="states">
         <div class="card">
-          <h2>29</h2>
+          <h2>28</h2>
           <p>States Covered</p>
         </div>
         <div class="card">
@@ -262,39 +263,50 @@
         </div>
       </div>
     </div>
-  </div>
-  <section class="section-features">
-    <div class="features-grid">
-      <div class="feature-box">
-        <span class="icon">🎨</span>
-        <h3>Cultural Art Forms & Heritage</h3>
-        <div class="button">
-          <a href="culture.html"><button class="culture-btn">culture</button></a>
+    <section class="section-features">
+      <div class="features-grid">
+        <div class="feature-box">
+          <span class="icon">🎨</span>
+          <h3>Cultural Art Forms & Heritage</h3>
+            <a href="culture.html"><button class="culture-btn">Culture</button></a>
+          <p>Explore traditional art forms and attire from every Indian state with interactive AR try-on features. Discover historical significance, famous temples, and their importance in tourism and GDP.</p>
         </div>
-        <p>Explore traditional art forms and attire from every Indian state with interactive AR try-on features.
-          Discover historical significance, famous temples, and their importance in tourism and GDP.
-        </p>
-        
+        <div class="feature-box">
+          <span class="icon">📍</span>
+          <h3>Marketplace</h3>
+          <a href="QUIZB/ecom.html"><button class="culture-btn">View marketplace</button></a>
+          <p>Curated links to authentic cultural products with real-time availability and artisan registration.</p>
+        </div>
+        <div class="feature-box">
+          <span class="icon">🛍</span>
+          <h3>Gamified Learning</h3>
+          <a href="QUIZB/quiz.html"><button class="culture-btn">Take Quiz</button></a>
+          <p>Engage with cultural quizzes, earn digital badges, and compete on leaderboards.</p>
+        </div>
+        <div class="feature-box">
+          <span class="icon">🏆</span>
+          <h3>Web AR-VR</h3>
+          <a href="WebAR/index.html"><button class="culture-btn">Try this</button></a>
+          <p>Explore traditional art forms and attire from every Indian state with interactive AR try-on features.</p>
+        </div>
+        <div class="feature-box">
+          <span class="icon">📍</span>
+          <h3>Place of Imporatnce</h3>
+          <a href="QUIZB/ecom.html"><button class="culture-btn">click here</button></a>
+          <p>Use AI to give detailed insights into heritage landmarks, their cultural impact, and historical context</p>
+        </div>
       </div>
-      <div class="feature-box" >
-        <span class="icon">📍</span>
-        <h3>Marketplace</h3>
-        <a href="QUIZB/ecom.html"><button class="quiz-btn">View marketplace</button></a>
-        <p>Curated links to authentic cultural products with real-time availability and artisan registration.</p>
+    </section>
+    <footer class="footer">
+      <div class="feedback">
+        <h2>Share feedback or suggestions</h2>
+        <input type="text" placeholder="Your feedback..." id="feedbackInput" />
+        <button class="submit-btn" onclick="alert('Thank you for your feedback!')">Submit</button>
       </div>
-      <div class="feature-box">
-        <span class="icon">🛍</span>
-        <h3>Gamified Learning</h3>
-        <a href="QUIZB/quiz.html"><button class="quiz-btn">Take Quiz</button></a>
-        <p>Engage with cultural quizzes, earn digital badges, and compete on leaderboards.</p>
+      <div style="margin-top:22px; color:#a83232; font-weight:600; font-size:1em;">
+        &copy; 2025 Bharat Heritage. All Rights Reserved.
       </div>
-      <div class="feature-box">
-        <span class="icon">🏆</span>
-        <h3>Web AR-VR</h3>
-        <a href="WebAR/index.html"><button class="web-btn">Try this</button></a>
-        <p>Explore traditional art forms and attire from every Indian state with interactive AR try-on features.</p>
-      </div>
-    </div>
-  </section>
-  </body>
+    </footer>
+  </div>
+</body>
 </html>
